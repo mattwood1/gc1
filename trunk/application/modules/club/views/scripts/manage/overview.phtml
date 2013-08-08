@@ -1,0 +1,58 @@
+<h1><?php echo $this->club->title; ?></h1>
+
+<div class="btn-group pull-right" >
+	<a class="btn" href="<?php echo $this->url(array('action' => 'edit-club')); ?>">Edit Club</a>
+	<a class="btn" href="<?php echo $this->url(array('action' => 'delete-club')); ?>">Delete Club</a>
+</div>
+
+<table class="table">
+	<tr>
+		<td>Category</td>
+		<td><?php echo $this->club->category; ?></td>
+	</tr>
+	<tr>
+		<td>Description</td>
+		<td><?php echo $this->club->description; ?></td>
+	</tr>
+	<tr>
+		<td>Telephone</td>
+		<td><?php echo $this->club->telephone; ?></td>
+	</tr>
+	<tr>
+		<td>Email</td>
+		<td><?php echo $this->club->email; ?></td>
+	</tr>
+	<tr>
+		<td>Facebook</td>
+		<td><?php echo $this->club->facebook; ?></td>
+	</tr>
+	<tr>
+		<td>Twitter</td>
+		<td><?php echo $this->club->twitter; ?></td>
+	</tr>
+</table>
+
+<a class="btn pull-right" href="<?php echo $this->url(array('action' => 'place')); ?>">Edit Places</a>
+<h3>Places and Times</h3>
+<?php if ($this->club->addresses): ?>
+	
+	<table class="table">
+		<?php foreach ($this->club->addresses as $address): ?>
+		<tr>
+			<td>
+				<?php echo $address->premise ? $address->premise .', ' : ''; ?>
+				<?php echo $address->street_number . ' ' . $address->route; ?>,
+				<?php echo $address->locality ? $address->locality . ', ' : ''; ?>
+				<?php echo $address->postal_town; ?>,
+				<?php echo $address->administrative_area_level_2 ? $address->administrative_area_level_2 . ', ' : ''; ?>
+				<?php echo $address->postal_code ? $address->postal_code . ', ' : ''; ?>
+				<?php echo $address->country ? $address->country : ''; ?>
+			</td>
+			<td>
+				Times
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</table>
+
+<?php endif;?>

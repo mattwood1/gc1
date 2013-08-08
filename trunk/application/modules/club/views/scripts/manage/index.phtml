@@ -1,0 +1,12 @@
+<h1>My Hobbies & Clubs</h1>
+						
+<?php if ($this->clubs): ?>
+	<ul class="unstyled">
+	<?php foreach ($this->clubs as $club):?>
+		<li><a href="<?php echo $this->url(array('action' => 'overview', 'id' => $club->clubId))?>"><?php echo $club->title; ?></a></li>
+	<?php endforeach; ?>
+	</ul>
+<?php else: ?>
+	<p>You currently do not have any hobbies or groups listed</p>
+	<a href="<?php echo $this->url(array('action' => 'create')); ?>" class="btn btn-primary">Create a Club</a>
+<?php endif; ?>

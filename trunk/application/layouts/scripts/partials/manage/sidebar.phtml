@@ -1,0 +1,16 @@
+<ul class="nav nav-list">
+	<li class="nav-header">User Account</li>
+	<li><a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'auth', 'action' => 'change-password'), 'default', true); ?>">Change Your Password</a></li>
+	<!-- <li><a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'auth', 'action' => 'change-email'), 'default', true); ?>">Change Your Email Address</a></li>  -->
+		
+	<li class="nav-header">Hobbies & Clubs</li>
+	<?php if ($this->clubs): ?>
+		<?php foreach ($this->clubs as $club): ?>
+			<li><a href="<?php echo $this->url(array('action' => 'overview', 'id' => $club->clubId)); ?>"><?php echo $club->title; ?></a></li>
+		<?php endforeach; ?>
+	<?php else: ?>
+		<li>There are no clubs</li>
+	<?php endif;?>
+	<li><a href="<?php echo $this->url(array('module' => 'club', 'controller' => 'manage', 'action' => 'create'),'default', true);?>">Create a Club or Group</a></li>
+  
+</ul>

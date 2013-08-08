@@ -1,0 +1,14 @@
+<h1>Hobbies and Clubs.co.uk</h1>
+This is the home page...
+
+<h3>Clubs</h3>
+<?php if ($this->clubs): ?>
+	<ul class="unstyled">
+	<?php foreach ($this->clubs as $club): ?>
+	
+		<li><?php echo $club->title; ?></li>
+		
+	<?php endforeach; ?>
+	</ul>
+<?php endif; ?>
+

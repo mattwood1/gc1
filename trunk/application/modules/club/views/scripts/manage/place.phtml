@@ -1,0 +1,24 @@
+<h1>Places and Times</h1>
+
+<p><a class="btn" href="<?php echo $this->url(array('action' => 'add-place')); ?>">Add a place</a></p>
+
+<?php if ($this->club->addresses): ?>
+<ul class="unstyled">
+	<?php foreach ($this->club->addresses as $address): ?>
+	<li>
+		<address>
+		<?php echo $address->premise ? $address->premise .'<br />' : ''; ?>
+		<?php echo $address->street_number . ' ' . $address->route; ?><br />
+		<?php echo $address->locality ? $address->locality . '<br />' : ''; ?>
+		<?php echo $address->postal_town; ?><br />
+		<?php echo $address->administrative_area_level_2 ? $address->administrative_area_level_2 . '<br />' : ''; ?>
+		<?php echo $address->postal_code ? $address->postal_code . '<br />' : ''; ?>
+		<?php echo $address->country ? $address->country : ''; ?>
+		<br>
+		<a class="btn" href="<?php echo $this->url(array('action' => 'add-session', 'address' => $address->addressId)); ?>">Add Session</a>
+		<a class="btn" href="<?php echo $this->url(array('action' => 'delete-place', 'address' => $address->addressId));?>">Delete</a>
+		</address>
+	</li>
+	<?php endforeach; ?>
+</ul>
+<?php endif; ?>
