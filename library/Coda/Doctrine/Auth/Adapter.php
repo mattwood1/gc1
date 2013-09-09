@@ -56,7 +56,7 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
      * @var array
      */
     protected $_authenticateResultInfo = null;
-    
+
     /**
      * $_resultRow - Results of database authentication query
      *
@@ -97,7 +97,7 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
             $this->setCredentialTreatment($credentialTreatment);
         }
     }
-    
+
     /**
      * setConnection() - set the connection to the database
      *
@@ -109,20 +109,20 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
         $this->_conn = $conn;
         return $this;
     }
-    
+
     /**
      * getConnection() - get the connection to the database
-     * 
+     *
      * @return Doctrine_Connection_Common|null
      */
     public function getConnection()
     {
         if (null === $this->_conn &&
             null !== $this->_tableName) {
-            
+
             $this->_conn = Doctrine::getConnectionByTableName($this->_tableName);
         }
-        
+
         return $this->_conn;
     }
 
@@ -222,7 +222,7 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
         if (!$this->_resultRow) {
             return false;
         }
-        
+
         $returnObject = new stdClass();
 
         if (null !== $returnColumns) {
@@ -256,7 +256,7 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     * authenticate() - defined by Zend_Auth_Adapter_Interface.  This method is called to 
+     * authenticate() - defined by Zend_Auth_Adapter_Interface.  This method is called to
      * attempt an authentication.  Previous to this call, this adapter would have already
      * been configured with all necessary information to successfully connect to a database
      * table and attempt to find a record matching the provided identity.
@@ -270,11 +270,11 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
         $dbSelect = $this->_authenticateCreateSelect();
 
         $resultIdentities = $this->_authenticateQuerySelect($dbSelect);
-        
+
         if ( ($authResult = $this->_authenticateValidateResultset($resultIdentities)) instanceof Zend_Auth_Result) {
             return $authResult;
         }
-        
+
         $authResult = $this->_authenticateValidateResult(array_shift($resultIdentities));
         return $authResult;
     }
@@ -289,7 +289,7 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
     protected function _authenticateSetup()
     {
         $exception = null;
-        
+
         if ($this->getConnection() === null) {
             $exception = 'A database connection was not set, nor could one be created.';
         } elseif ($this->_tableName == '') {
@@ -311,13 +311,13 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
             require_once 'Zend/Auth/Adapter/Exception.php';
             throw new Zend_Auth_Adapter_Exception($exception);
         }
-        
+
         $this->_authenticateResultInfo = array(
             'code'     => Zend_Auth_Result::FAILURE,
             'identity' => $this->_identity,
             'messages' => array()
             );
-            
+
         return true;
     }
 
@@ -333,10 +333,10 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
         if (empty($this->_credentialTreatment) || (strpos($this->_credentialTreatment, "?") === false)) {
             $this->_credentialTreatment = '?';
         }
-		
+
 		$dbSelect = Doctrine_Query::create($this->getConnection())
 					->from($this->_tableName)
-					->select('*, ('.$this->_credentialColumn.' = '.str_replace('?', 
+					->select('*, ('.$this->_credentialColumn.' = '.str_replace('?',
 						$this->getConnection()->quote($this->_credential), $this->_credentialTreatment).') AS zend_auth_credential_match')
 					->addWhere($this->_identityColumn .' = ?', $this->_identity);
 
@@ -393,7 +393,7 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     * _authenticateValidateResult() - This method attempts to validate that the record in the 
+     * _authenticateValidateResult() - This method attempts to validate that the record in the
      * result set is indeed a record that matched the identity provided to this adapter.
      *
      * @param array $resultIdentity
@@ -414,7 +414,7 @@ class Coda_Doctrine_Auth_Adapter implements Zend_Auth_Adapter_Interface
         $this->_authenticateResultInfo['messages'][] = 'Authentication successful.';
         return $this->_authenticateCreateAuthResult();
     }
-    
+
     /**
      * _authenticateCreateAuthResult() - This method creates a Zend_Auth_Result object
      * from the information that has been collected during the authenticate() attempt.
